@@ -289,8 +289,8 @@ def set_missing_sconscript_error(flag=1):
     _no_missing_sconscript = flag
     return old
 
-#
-def Variables(files=[], args=ARGUMENTS):
+
+def Variables(files=None, args=ARGUMENTS):
     return SCons.Variables.Variables(files, args)
 
 
