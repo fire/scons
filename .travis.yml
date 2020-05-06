@@ -16,6 +16,7 @@ os:
 install:
   # needed for Docbook tests, must be in virtualenv context
   - pip install lxml==4.3.3
+  - pip install ninja
   # do the rest of the image setup
   - ./.travis/install.sh
 

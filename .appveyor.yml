@@ -20,7 +20,7 @@ install:
   - cmd: for /F "tokens=*" %%g in ('C:\\%WINPYTHON%\\python.exe -m site --user-site') do (set PYSITEDIR=%%g)
   # use mingw 32 bit until #3291 is resolved
   - cmd: "set PATH=C:\\%WINPYTHON%;C:\\%WINPYTHON%\\Scripts;C:\\ProgramData\\chocolatey\\bin;C:\\MinGW\\bin;C:\\MinGW\\msys\\1.0\\bin;C:\\cygwin\\bin;C:\\msys64\\usr\\bin;C:\\msys64\\mingw64\\bin;%PATH%"
-  - cmd: "C:\\%WINPYTHON%\\python.exe -m pip install -U --progress-bar off pip setuptools wheel "
+  - cmd: "C:\\%WINPYTHON%\\python.exe -m pip install -U --progress-bar off pip setuptools wheel ninja"
   - cmd: "C:\\%WINPYTHON%\\python.exe -m pip install -U --progress-bar off pypiwin32 coverage codecov"
   - cmd: set STATIC_DEPS=true & C:\\%WINPYTHON%\\python.exe -m pip install -U --progress-bar off lxml
   # install 3rd party tools to test with
@@ -38,7 +38,7 @@ install:
   - sh: which python$PYTHON
   - sh: python$PYTHON --version
   - sh: export PYSITEDIR=$(python$PYTHON -m site --user-site)
-  - sh: python$PYTHON -m pip install --user -U --progress-bar off pip setuptools wheel
+  - sh: python$PYTHON -m pip install --user -U --progress-bar off pip setuptools wheel ninja
   - sh: python$PYTHON -m pip install --user -U --progress-bar off coverage codecov
   - sh: STATIC_DEPS=true python$PYTHON -m pip install --user -U --progress-bar off lxml
   - sh: ./.travis/install.sh
