@@ -280,13 +280,13 @@ class SConsToNinjaTranslator:
             if handler is not None:
                 return handler(node.env if node.env else self.env, node)
 
-        raise Exception(
-            "Found unhandled function action {}, "
-            " generating scons command to build\n"
-            "Note: this is less efficient than Ninja,"
-            " you can write your own ninja build generator for"
-            " this function using NinjaRegisterFunctionHandler".format(name)
-        )
+        # raise Exception(
+        #     "Found unhandled function action {}, "
+        #     " generating scons command to build\n"
+        #     "Note: this is less efficient than Ninja,"
+        #     " you can write your own ninja build generator for"
+        #     " this function using NinjaRegisterFunctionHandler".format(name)
+        # )
 
     # pylint: disable=too-many-branches
     def handle_list_action(self, node, action):
@@ -844,28 +844,7 @@ def get_command_env(env):
         if key not in os.environ or os.environ.get(key, None) != value
     }
 
-    windows = env["PLATFORM"] == "win32"
     command_env = ""
-    for key, value in scons_specified_env.items():
-        # Ensure that the ENV values are all strings:
-        if is_List(value):
-            # If the value is a list, then we assume it is a
-            # path list, because that's a pretty common list-like
-            # value to stick in an environment variable:
-            value = flatten_sequence(value)
-            value = joinpath(map(str, value))
-        else:
-            # If it isn't a string or a list, then we just coerce
-            # it to a string, which is the proper way to handle
-            # Dir and File instances and will produce something
-            # reasonable for just about everything else:
-            value = str(value)
-
-        if windows:
-            command_env += "set '{}={}' && ".format(key, value)
-        else:
-            command_env += "{}={} ".format(key, value)
-
     env["NINJA_ENV_VAR_CACHE"] = command_env
     return command_env
 
